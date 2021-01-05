@@ -9,13 +9,15 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ name }}</h1>
 
-   <ul>
-        {% for i in 0..10 %}
-            <li>Element: {{ i}}</li>
-        {% endfor %}
-   </ul>
+        <h1>Hello {{ name }}</h1>
+    {# brute de pomme sans filtre #}
+    <p>{{city}}</p>
+    {# Le contenu est mis en majuscule / GOTHAM #}
+    <p>{{city | upper}}</p>
+    {# La 1ere lettre est en  #}
+    <p>{{city | title }}</p>
 
+</div>
 {% endblock %}
 
