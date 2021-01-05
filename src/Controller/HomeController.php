@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use stdClass;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
@@ -13,11 +14,31 @@ class HomeController extends AbstractController
      */
     public function index(): Response
     {
-        // Je déclare un name qui sera envoyé à la vue
-        // Et qui contient -> Page d'accueil - dans la vue j'utilise
-        // La var name
+        // je déclare une variable php de type string 
+        $author= "Loïs Lane";
+
+        // J'instancie un objet standard PHP sans class fait pas nous meme
+        // Je n'oublie pas l'import | NameSpaceResolver -> plugin
+        $article = new stdClass();
+        // J'attribue des proprietes à mon objet
+        $article->title = "Théorie du complot";
+        $article->intro = "Fascine depuis des lustres ! on vous dit tout";
+        $article->content = "Blabla, Po po po , papa papa bla bla";
+
+        // J'instancie un autre objet
+        $michel = new stdClass();
+        $michel->name = "Michel";
+        $michel->age = 58;
+
+        $outcast = "JD3000";
+
+        // Je file tout ça à ma vue pour l'afficher !
         return $this->render('home/index.html.twig', [
             'name' => 'Page d\'accueil',
+            "article" => $article,
+            "auteur"  => $author,
+            "user"    => $michel,
+            "jeanDaniel" =>  $outcast
         ]);
     }
 }
