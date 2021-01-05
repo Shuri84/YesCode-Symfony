@@ -14,11 +14,8 @@ class HomeController extends AbstractController
      */
     public function index(): Response
     {   
-        $city= "gotham";
-
         return $this->render('home/index.html.twig', [
-            'name'  => 'Page d\'accueil',
-            "city"  => $city
+            'name'  => 'Page d\'accueil'
         ]);
     }
 }
