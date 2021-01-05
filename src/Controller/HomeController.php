@@ -14,34 +14,9 @@ class HomeController extends AbstractController
      */
     public function index(): Response
     {
-        // je déclare une variable php de type string 
-        $author= "Loïs Lane";
-
-        // J'instancie un objet standard PHP sans class fait pas nous meme
-        // Je n'oublie pas l'import | NameSpaceResolver -> plugin
-        $article = new stdClass();
-        // J'attribue des proprietes à mon objet
-        $article->title = "Théorie du complot";
-        $article->intro = "Fascine depuis des lustres ! on vous dit tout";
-        $article->content = "Blabla, Po po po , papa papa bla bla";
-
-        // J'instancie un autre objet
-        $michel = new stdClass();
-        $michel->name = "Michel";
-        $michel->age = 58;
-
-        $outcast = "JD3000";
-        // Je déclare une variable / plus tard dynamique depuis une bdd ! 
-        $picture = "https://www.rollingstone.com/wp-content/uploads/2019/12/andre-3000.jpg";
-
-        // Je file tout ça à ma vue pour l'afficher !
+        
         return $this->render('home/index.html.twig', [
-            'name' => 'Page d\'accueil',
-            "article" => $article,
-            "auteur"  => $author,
-            "user"    => $michel,
-            "jeanDaniel" =>  $outcast,
-            "image"      =>  $picture
+            'name' => 'Page d\'accueil'
         ]);
     }
 }
