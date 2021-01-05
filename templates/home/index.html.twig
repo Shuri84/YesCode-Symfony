@@ -14,11 +14,11 @@
     <h2>Nos Jeux</h2>
     <hr>
 
-{# Le nom game n'a pas d'importance c'est une variable qui n'existe que dans cette boucle 
-  par contre games viens de la vue , c'est notre tableau   #}
-    {% for game in games %}
 
-        <h3> {{ game }} </h3>
+    {% for game,multi in games %}
+
+        <h3>Titre: {{ game }} </h3>
+        <h4>Multi: {{ multi }} </h4>
         
     {% endfor %}
 
