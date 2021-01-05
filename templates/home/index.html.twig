@@ -12,5 +12,11 @@
     <h1>Hello {{ name }}</h1>
 
 
+{% if user.isConnected %}
+    <button>Déconnexion</button>
+    {% else %}
+        <button>connexion</button>
+{% endif %}
+
 {% endblock %}
 
