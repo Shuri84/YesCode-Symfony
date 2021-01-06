@@ -2,9 +2,14 @@
 
 {% block title %}Accueil{% endblock %}
 
-{% block body %}<h2>Page d'accueil</h2>{% endblock %}
+{% block body %}
+
+<h2>Page d'accueil</h2>
+
+    <a href="{{ path("articles_list") }}">
+        Vers Les articles
+    </a>
 
 
-{% block bidule %}
-    <p>Je suis sur la page d'accueil - Je suis BIDULE</p>
 {% endblock %}
+
