@@ -12,12 +12,29 @@
 
 <h1> {{ name }}</h1>
 
-    {% set item = {"nom": "pomme", "forme": "ronde", "poids": 200 } %}
+    {# Je crée des variables TWIG rien dans le controller #}
+    {% set michel = {"name": "Michel", "age": 58, "adress": "12 rue de sol" } %}
+    {% set zak = {"name": "zAk", "age": 33,  "adress": "69 boulevard du ciel" } %}
+    {% set david = {"name": "daVID", "age": null , "adress": "47 avenue de la terre" } %}
+    {% set users = {michel,zak,david } %}
+    {# Cela me permet de simuler un comportement, et d'anticiper des cas de figure #}
 
-    <p>Name: {{item.nom}}</p>
-    <p>Shape: {{item.forme}}</p>
-    <p>Weight: {{item.poids}} g.</p>
+    {# je boucle sur mon tableau TWIG (users) comme un tableau venant du controller en php  #}
+    {% for user in users %}
+    {# J'utilise un filtre pour etre sur que l'affichage soit TOUJOURS correct   #}
+        <p>Name: {{ user.name | title }}</p> 
+        {# Je m'occupe d'un cas d'usage #}
+        {% if user.age %}
+            <p>Age: {{ user.age }}</p>
+            {% else %}
+                <p>Age: NC (non communiqué)</p>
+        {% endif %}
 
+        <p>Adress: {{ user.adress }}</p>
+
+        <hr>
+    {% endfor %}
+    
 </div>
 {% endblock %}
 
