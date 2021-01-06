@@ -2,4 +2,18 @@
 
 {% block title %}Nos Articles{% endblock %}
 
-{% block body %}<h2>Nos Articles</h2>{% endblock %}
+{% block body %}
+
+    <h2>Nos Articles</h2>
+
+
+{% endblock %}
+
+{% block footer %} <p>Je suis un footer</p> 
+
+
+    {% if block("footer") %}    
+        <p>Tu as refais un footer ? Pk ?</p>    
+    {% endif %} 
+
+{% endblock %}
