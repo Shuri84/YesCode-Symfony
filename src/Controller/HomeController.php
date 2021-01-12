@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Cocur\Slugify\Slugify;
 use App\Repository\ArticleRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,7 +16,16 @@ class HomeController extends AbstractController
      */
     public function index(ArticleRepository $repo): Response
     {    
+
         $articles = $repo->findLastArticles(3);
+        
+        $slugify = new Slugify();
+
+        $title = "La théorie £ % 4 4 { é # des cordes à Linges * Gravitionnelles";
+
+        $slug = $slugify->slugify($title);
+        
+        dump($slug);
 
         return $this->render('home/index.html.twig', [
             "articles" => $articles
