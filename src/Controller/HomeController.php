@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use Cocur\Slugify\Slugify;
 use App\Repository\ArticleRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,14 +18,6 @@ class HomeController extends AbstractController
 
         $articles = $repo->findLastArticles(3);
         
-        $article = $repo->findOneById(28);
-
-        $slugify = new Slugify();
-
-        $slug = $slugify->slugify($article->getTitle() . time() . hash("md5", $article->getIntro()));
-        
-        dump($slug);
-
         return $this->render('home/index.html.twig', [
             "articles" => $articles
         ]);
