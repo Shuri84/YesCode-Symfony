@@ -23,6 +23,15 @@ class ArticleController extends AbstractController
     }
 
     /**
+     * @Route("/articles/new", name="article_create")
+     */
+    public function create()
+    {
+        return $this->render('article/create.html.twig', [
+        ]);
+    }
+    
+    /**
      * @Route("/articles/{slug}", name="article_show")
      */
     public function show($slug, ArticleRepository $articleRepository): Response
@@ -34,6 +43,9 @@ class ArticleController extends AbstractController
             'article' => $article
         ]);
     }
+
+
+
 
 
 }
