@@ -23,12 +23,12 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/articles/{slug}", name="article_show")
+     * @Route("/articles/{id}", name="article_show")
      */
-    public function show($slug, ArticleRepository $articleRepository): Response
+    public function show($id, ArticleRepository $articleRepository): Response
     {
 
-        $article = $articleRepository->findOneBySlug($slug);
+        $article = $articleRepository->findOneById($id);
 
         return $this->render('article/show.html.twig', [
             'article' => $article
