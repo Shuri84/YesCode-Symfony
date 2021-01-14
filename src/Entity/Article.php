@@ -2,11 +2,14 @@
 
 namespace App\Entity;
 
+
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ArticleRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
-/**
+
+ /**
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
  * @ORM\HasLifecycleCallbacks
  */
@@ -21,21 +24,36 @@ class Article
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 5,
+     *      max = 255,
+     *      minMessage = "Un titre aussi court ? Minimum {{ limit }} charactères requis ",
+     *      maxMessage = "Un titre de moins {{ limit }} charactères est requis  !",
+     *      allowEmptyString = false
+     * )
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 20,
+     *      max = 255,
+     *      minMessage = "Minimum {{ limit }} charactères pour l'intro ",
+     *      maxMessage = "Plus de {{ limit }} charactères ce n'est plus une intro  !",
+     *      allowEmptyString = false)
      */
     private $intro;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="Ce champs ne peut pas etre vide")
      */
     private $content;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Url(message="Ceci n'est pas une url")
      */
     private $image;
 
@@ -48,35 +66,6 @@ class Article
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
-
-    /**
-     * Génére un slug automatiquement
-     * 
-     * @ORM\PrePersist
-     *
-     * @return void
-     */
-    public function initSlug(){
-        if(empty($this->slug)){
-            $slugify = new Slugify();
-            $this->slug = $slugify->slugify($this->getTitle() . time() . hash("sha1", $this->getIntro() ));
-
-        }
-    }
-
-    /**
-     * Génére la date automatiquement
-     * 
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
-     *
-     * @return void
-     */
-    public function updateDate(){
-        if(empty($this->createdAt)){
-            $this->createdAt = new \DateTime();
-        }
-    }
 
     public function getId(): ?int
     {
@@ -154,4 +143,34 @@ class Article
 
         return $this;
     }
+
+    /**
+     * Génére un slug automatiquement
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     * 
+     * @return void
+     */
+    public function initSlug(){
+        if(empty($this->slug) ){
+            $slugify = new Slugify();
+            $this->slug = $slugify->slugify($this->getTitle(). time( ) . hash("sha1", $this->getIntro()) );
+        }
+    }
+
+    /**
+     * Génére la date automatiquement 
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     * 
+     * @return void
+     */
+    public function updateDate(){
+        if(empty($this->createdAt)){
+            $this->createdAt = new \DateTime();
+        }
+    }
+    
 }
