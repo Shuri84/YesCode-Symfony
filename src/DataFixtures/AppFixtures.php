@@ -7,9 +7,16 @@ use App\Entity\User;
 use App\Entity\Article;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+    private $encoder;
+    
+    public function __construct(UserPasswordEncoderInterface $encoder){
+        $this->encoder = $encoder;
+    }
+    
     public function load(ObjectManager $manager)
     {
         $faker = Faker\Factory::create('fr_FR');
@@ -36,7 +43,7 @@ class AppFixtures extends Fixture
                  ->setEmail($faker->email)
                  ->setAvatar($picture)
                  ->setPresentation($faker->sentence())
-                 ->setHash("password");
+                 ->setHash($this->encoder->encodePassword($user, 'password'));
         
             $manager->persist($user);
             //Ici je charge mon tableau

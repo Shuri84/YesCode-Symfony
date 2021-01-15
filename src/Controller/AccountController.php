@@ -10,9 +10,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AccountController extends AbstractController
 {
+
+    /**
+     * @Route("/login", name="account_login")
+     */
+    public function login(): Response
+    {
+        return $this->render('account/login.html.twig', [
+        ]);
+    }
+
     /**
      * @Route("/account", name="users_list")
      */
@@ -27,7 +38,7 @@ class AccountController extends AbstractController
     /**
      * @Route("/account/new", name="account_create")
      */
-    public function create(Request $request, EntityManagerInterface $manager) 
+    public function create(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder) 
     {
         $user = new User();
 
@@ -36,6 +47,11 @@ class AccountController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
+
+            $hash = $encoder->encodePassword($user, $user->getHash());
+            $user->setHash($hash);
+
+
             $manager->persist($user);
             $manager->flush();
 
@@ -67,13 +83,16 @@ class AccountController extends AbstractController
     /**
      * @Route("/account/{slug}/edit", name="account_edit")
      */
-    public function edit(Request $request, User $user, EntityManagerInterface $manager)
+    public function edit(Request $request, User $user, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
     {
         $form = $this->createForm(AccountType::class, $user);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $hash = $encoder->encodePassword($user, $user->getHash());
+            $user->setHash($hash);
             $manager->flush();
 
             $this->addFlash('info', 
