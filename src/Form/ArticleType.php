@@ -28,7 +28,7 @@ class ArticleType extends AbstractType
                 'label' => 'Votre contenu',
                 'attr'  => ['placeholder' => 'Dites-nous tout !']
             ])
-            ->add('image', UrlType::class, [
+            ->add('image', TextType::class, [
                 'label' => 'Adresse de l\'image',
                 'attr'  => ['placeholder' => 'Coller un lien d\'image']
             ])
