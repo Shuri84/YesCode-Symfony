@@ -14,27 +14,11 @@ class AppFixtures extends Fixture
     {
         $faker = Faker\Factory::create('fr_FR');
 
-        // GESTION DES ARTICLES
-        for ($i=0; $i <=20 ; $i++) { 
-            
-            $article = new Article();
-            
-            $title = $faker->sentence(2);
 
-            $image = "https://picsum.photos/400/300";
+        // Gestion des USERS - Creation de faux users
 
-            $intro = $faker->paragraph(2);
-
-            $content = '<p>' . implode('</p><p>',$faker->paragraphs(5)) . '</p>';
-
-            $article->setTitle($title)
-                    ->setImage($image)
-                    ->setIntro($intro)
-                    ->setContent($content);
-
-            $manager->persist($article);
-            }
-
+        // Me servira a charger les users que je vais créer
+        $users = [];
         $genres = ['male', 'female'];
 
         for ($i=0; $i <= 20 ; $i++) { 
@@ -55,8 +39,36 @@ class AppFixtures extends Fixture
                  ->setHash("password");
         
             $manager->persist($user);
+            //Ici je charge mon tableau
+            $users[]= $user;
       
         }
+        
+        // GESTION DES ARTICLES
+        for ($i=0; $i <=20 ; $i++) { 
+            
+            $article = new Article();
+            
+            $title = $faker->sentence(2);
+
+            $image = "https://picsum.photos/400/300";
+
+            $intro = $faker->paragraph(2);
+
+            $content = '<p>' . implode('</p><p>',$faker->paragraphs(5)) . '</p>';
+
+            // J'utilise mes users pour en prendre au HASARD 
+            $author= $users[mt_rand(0, count($users) -1)];
+
+            $article->setTitle($title)
+                    ->setImage($image)
+                    ->setIntro($intro)
+                    ->setContent($content)
+                    ->setAuthor($author);
+
+            $manager->persist($article);
+            }
+
 
         $manager->flush();
 
